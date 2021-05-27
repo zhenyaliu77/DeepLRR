@@ -5,7 +5,7 @@ We introduce our method DeepLRR based on a convolutional neural network (CNN) mo
 
 DeepLRR is available at http://lifenglab.hzau.edu.cn/DeepLRR
 
-========================================================================================
+============================================================================
 # DeepLRR-data
 **This part contains all the raw data we used**   
 
@@ -29,7 +29,7 @@ negativesampledataset.txt---------------------Negative samples used to train,val
 
 positivesampledataset.txt---------------------Positive samples used to train,validation and test the CNN model
 
-========================================================================================
+============================================================================
 # DeepLRR-CNN
 **This part is designed to help interested parties quickly divide the training set,validation set and testing set, in addition to train a new CNN model of DeepLRR**
 
@@ -49,7 +49,7 @@ If you want to use the two commands successfully,you should make sure that your 
 
 Please manually change the parameter of the number of training set in train.py
 
-========================================================================================
+============================================================================
 # DeepLRR-1.01
 **This part aims to predict the position,length and number of LRR units in the unknown protein sequence**
 
@@ -59,6 +59,6 @@ python ./DeepLRR.py ./input.fasta Lscp Ldcp Lncp current_path model_name
 
 eg:   python DeepLRR.py /home/lona/DeepLRR-1.01/demo/Q96FE5.fasta 4 9 3 /home/lona/DeepLRR-1.01 model-1.01.pt
 
-========================================================================================
+============================================================================
 
 
