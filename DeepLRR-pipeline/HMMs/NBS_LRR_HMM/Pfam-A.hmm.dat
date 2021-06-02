@@ -1,0 +1,26 @@
+# STOCKHOLM 1.0
+#=GF ID   NB-ARC
+#=GF AC   PF00931.23
+#=GF DE   NB-ARC domain
+#=GF GA   23.50; 23.50;
+#=GF TP   Domain
+#=GF ML   252
+#=GF CL   CL0023
+//
+# STOCKHOLM 1.0
+#=GF ID   CC
+#=GF AC   PF04942.15
+#=GF DE   CC domain
+#=GF GA   20.60; 20.60;
+#=GF TP   Domain
+#=GF ML   34
+//
+# STOCKHOLM 1.0
+#=GF ID   TIR
+#=GF AC   PF01582.21
+#=GF DE   TIR domain
+#=GF GA   21.30; 21.30;
+#=GF TP   Family
+#=GF ML   176
+#=GF CL   CL0173
+//
