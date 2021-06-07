@@ -118,7 +118,7 @@ And the program will show the required software which is lacked, as is shown bel
 [ERROR] Pytorch have not installed yet, please install pytorch!
 ```
 
-To make the software installation process easier, we have packed the software needed in `tools.tar.gz`, and a shell script `auto_delpoy.sh` to deploy it, the four software can be easily deployed by the command:
+To make the software installation process easier, we have packed the software needed in `tools.tar.gz`, and a shell script `auto_deploy.sh` to deploy it, the four software can be easily deployed by the command:
 
 ```shell
 bash auto_deploy.sh
