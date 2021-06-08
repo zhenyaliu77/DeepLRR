@@ -48,13 +48,13 @@ if len(argv_list) == 7:
         os.mkdir(curr_dir+'/outcome')
 
     fasta_name = fasta_path.split('/')[-1]
-    command1 = 'python '+curr_dir+'/fastaTosegment.py '+fasta_path+' '+curr_dir+'/outcome'+'/'+fasta_name.split('.')[0]+'_segment.txt'
+    command1 = 'python '+curr_dir+'/fastaTosegment.py '+fasta_path+' '+curr_dir+'/outcome'+'/'+'.'.join(fasta_name.split('.')[0:-1])+'_segment.txt'
 
-    command2 = 'python '+curr_dir+'/predict1.py '+curr_dir+'/outcome'+'/'+fasta_name.split('.')[0]+'_segment.txt'+' '+curr_dir+'/outcome'+'/'+fasta_name.split('.')[0]+'_predict1.txt'+' '+model_name+'.pt'
+    command2 = 'python '+curr_dir+'/predict1.py '+curr_dir+'/outcome'+'/'+'.'.join(fasta_name.split('.')[0:-1])+'_segment.txt'+' '+curr_dir+'/outcome'+'/'+'.'.join(fasta_name.split('.')[0:-1])+'_predict1.txt'+' '+model_name+'.pt'
 
-    command3 = 'python '+curr_dir+'/predict2.py '+curr_dir+'/outcome'+'/'+fasta_name.split('.')[0]+'_predict1.txt'+' '+str(Lscp)+' '+str(Ldcp)+' '+str(Lncp)+' '+curr_dir+'/outcome'+'/'+fasta_name.split('.')[0]+'_predict2.txt'
+    command3 = 'python '+curr_dir+'/predict2.py '+curr_dir+'/outcome'+'/'+'.'.join(fasta_name.split('.')[0:-1])+'_predict1.txt'+' '+str(Lscp)+' '+str(Ldcp)+' '+str(Lncp)+' '+curr_dir+'/outcome'+'/'+'.'.join(fasta_name.split('.')[0:-1])+'_predict2.txt'
     
-    command4 = 'python '+curr_dir+'/gapsequence.py '+fasta_path+' '+curr_dir+'/outcome/'+fasta_name.split('.')[0]+'_predict2.txt'+' '+curr_dir+'/gapsequence.txt'
+    command4 = 'python '+curr_dir+'/gapsequence.py '+fasta_path+' '+curr_dir+'/outcome/'+'.'.join(fasta_name.split('.')[0:-1])+'_predict2.txt'+' '+curr_dir+'/gapsequence.txt'
     os.system(command1)
     os.system(command2)
     os.system(command3)
