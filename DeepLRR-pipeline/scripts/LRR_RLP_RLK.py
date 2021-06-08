@@ -10,6 +10,8 @@ import os
 import getopt
 import pipeline
 import sys
+from random import randint
+
 
 opts, args = getopt.getopt(sys.argv[1:], '-h-k', ["help", "kinase"])
 kinase = False
@@ -34,8 +36,9 @@ elif len(args) == 3:
     scriptdir = 'scripts/DeepLRR-1.01'
     input_file = args[0]
     input_filename = '.'.join(input_file.split('.')[0:-1])
-    os.system('cp '+input_file+' '+input_filename+'_temp.fa')
-    input_filename += '_temp'
+    rand_id = str(randint(1,99999999))
+    os.system('cp '+input_file+' '+input_filename+'_temp'+rand_id+'.fa')
+    input_filename += '_temp'+rand_id
     input_file = input_filename + '.fa'
     input_filename_noprefix = input_filename.split(r'/')[-1]
     output_file = args[1]

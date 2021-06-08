@@ -46,14 +46,16 @@ def env_check():
 
 def usage():
     print('DeepLRR_Search is an integrated tool for LRR domain searching.\n' +
-          'Usages: python -f <input_file> -o <output_file> -d <domain_type> -m <model_name> [-a|h] <Lscp> <Ldcp> <Lncp>\n' +
-          '  -d <domain type>\t: the LRR domain you want to search [ NBS_LRR | LRR_RLK | LRR_RLP | LRR ]   *choose [LRR] will only run DeepLRR instead of the pipeline\n' +
+          'Usages: python DeepLRR_Search.py -f <input_file> -o <output_file> -d [domain_type] -m [model_name] [-a|h|e] <Lscp> <Ldcp> <Lncp>\n' +
+          '  -d [domain type]\t: the LRR domain you want to search [ NBS_LRR | LRR_RLK | LRR_RLP | LRR ]   *choose [LRR] will only run DeepLRR instead of the pipeline\n' +
           '  -f <input_file>\t: assign input file\n' +
           '  -o <output_file>\t: assign output file\n' +
-          '  -m <model_name>\t: assign version of DeepLRR model, \'model-1.01\' is set for default\n'+
+          '  -m [model_name]\t: assign version of DeepLRR model, \'model-1.01\' is set for default\n'+
           '  -a --atypical\t\t: search for atypical domain, have to assign domain type at the same time, when choosing [LRR] domain, this input will be ignored\n' +
           '  -h --help\t\t: look for usages \n'+
-          '  <Lscp> <Ldcp> <Lncp>\t: assign parameter of DeepLRR Search\n')
+          '  <Lscp> <Ldcp> <Lncp>\t: assign parameter of DeepLRR Search\n'+
+          '  -e --envcheck\t\t: check environment dependenties\n'
+          )
     quit()
 
 
@@ -98,24 +100,22 @@ def input_check(input_filename, output_filename, category, model_name):
 
 
 if __name__ == '__main__':
-    atypical = False
-    default_param = True
-    model_name = 'model-1.01'
-    p1,p2,p3='4','9','3'
-    
-    checked = env_check()
-    if not checked:
-        print('Session Terminated! Prerequisite unsatisified! Check your environment!')
-
     try:
-        options, args = getopt.getopt(sys.argv[1:], "hd:af:o:m:", ['help', 'domain=', 'atypical', 'fasta=', 'output=', 'model='])
+        options, args = getopt.getopt(sys.argv[1:], "ehd:af:o:m:", ['envcheck', 'help', 'domain=', 'atypical', 'fasta=', 'output=', 'model='])
         for name, value in options:
+            if name in ('-e', '--envcheck'):
+                checked = env_check()
+                if checked:
+                    print('Environment check PASS!')
+                quit()
             if name in ('-h', '--help'):
                 usage()
             if name in ('-o', '--output'):
                 output_file = value
             if name in ('-a', '--atypical'):
                 atypical = True
+            else:
+                atypical = False
             if name in ('-d', '--domain'):
                 domain = value
             if name in ('-f', '--fasta'):
@@ -124,6 +124,9 @@ if __name__ == '__main__':
                 model_name = value
         # print(args)
         warn1,warn2 = False, False
+        default_param = True
+        model_name = 'model-1.01'
+        p1,p2,p3='4','9','3'
         if len(args)==3 and domain == 'LRR':
             p1,p2,p3 = args[0], args[1], args[2]
             default_param = False
@@ -134,6 +137,11 @@ if __name__ == '__main__':
             atypical=False
     except getopt.GetoptError:
         usage()
+
+    checked = env_check()
+    if not checked:
+        print('Session Terminated! Prerequisite unsatisified! Check your environment!')
+
 
     #    input_check(input_file, output_file, domain, model_name)
 
