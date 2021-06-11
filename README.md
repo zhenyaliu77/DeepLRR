@@ -39,9 +39,9 @@ python ./main.py ./train.txt ./test.txt ./model
 
 eg:  python main.py /home/lona/DeepLRR-CNN/script/train.txt /home/lona/DeepLRR-CNN/script/test.txt /home/lona/DeepLRR-CNN/script/model
 ```
-1. If you want to use the two commands successfully,you should make sure that your **python version is above 3.5.x** and **torch** has been installed   
++ If you want to use the two commands successfully,you should make sure that your **python version is above 3.5.x** and **torch** has been installed   
 
-2. Please manually change the parameter of the number of training set in train.py
++ Please manually change the parameter of the number of training set in train.py
 
 # DeepLRR-1.01
 **This part aims to predict the position,length and number of LRR units in the unknown protein sequence**
