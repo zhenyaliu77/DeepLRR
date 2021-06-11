@@ -10,7 +10,6 @@ DeepLRR is available at http://lifenglab.hzau.edu.cn/DeepLRR
 # DeepLRR-data
 **This part contains all the raw data we used**   
 
-- Data
   |File name | Introduction|
   |---|---|
   |LRRproteins_1748_swissprot.fasta  | Sequences of the LRR protein we ultimately retained|
@@ -27,10 +26,11 @@ DeepLRR is available at http://lifenglab.hzau.edu.cn/DeepLRR
 # DeepLRR-CNN
 **This part is designed to help interested parties quickly divide the training set,validation set and testing set, in addition to train a new CNN model of DeepLRR**
 
-==To divide the training set,validation set and testing set==   
-
-python ./split_train_val_test.py  ./positivesampledataset.txt  ./negativesampledataset.txt   
-
+## Usages
+    1. To divide the training set,validation set and testing set   
+```shell
+python split_train_val_test.py  positivesampledataset.txt  negativesampledataset.txt   
+```
 eg:  python split_train_val_test.py /home/lona/DeepLRR-CNN/data/LRR_10938.txt /home/lona/DeepLRR-CNN/data/NOLRR_10938.txt
 
 ==To train a new CNN model of DeepLRR==   
