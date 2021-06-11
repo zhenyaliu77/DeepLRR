@@ -39,21 +39,21 @@ python ./main.py ./train.txt ./test.txt ./model
 
 eg:  python main.py /home/lona/DeepLRR-CNN/script/train.txt /home/lona/DeepLRR-CNN/script/test.txt /home/lona/DeepLRR-CNN/script/model
 ```
-If you want to use the two commands successfully,you should make sure that your ***python version is above 3.5.x*** and ***torch*** has been installed   
+If you want to use the two commands successfully,you should make sure that your **python version is above 3.5.x** and **torch** has been installed   
 
 Please manually change the parameter of the number of training set in train.py
 
-============================================================================
 # DeepLRR-1.01
 **This part aims to predict the position,length and number of LRR units in the unknown protein sequence**
 
-==To predict the position,length and number of LRR units in the unknown protein sequence==   
-
+## Usages
+    1. To predict the position,length and number of LRR units in the unknown protein sequence==   
+```shell
 python ./DeepLRR.py ./input.fasta Lscp Ldcp Lncp current_path model_name   
 
 eg:   python DeepLRR.py /home/lona/DeepLRR-1.01/demo/Q96FE5.fasta 4 9 3 /home/lona/DeepLRR-1.01 model-1.01.pt
+```
 
-============================================================================
 
 # DeepLRR-pipeline
 
