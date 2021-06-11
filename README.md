@@ -3,7 +3,7 @@
 
 We introduce our method DeepLRR based on a convolutional neural network (CNN) model and LRR features, for predicting number and location of LRR unit in LRR proteins. We verified that the CNN model has a stronger ability to predict LRR units than the other three machine learning models (SVM, RF, NB). In order to better meet different research needs, we set three adjustable parameters (Lscp, Ldcp, Lncp) for DeepLRR based on LRR features. We compared DeepLRR to six existing methods on a dataset containing 874 LRR proteins, and DeepLRR outperformed the competing methods in overall F1-score. In addition, DeepLRR has integrated the pipeline of identifying plant disease-resistance proteins (NLR、RLK、RLP) and atypical domains
 
-DeepLRR is available at http://lifenglab.hzau.edu.cn/DeepLRR   
+The website of DeepLRR is available at http://lifenglab.hzau.edu.cn/DeepLRR   
 
 ![image](https://github.com/zhenyaliu77/DeepLRR/blob/master/deeplrr.png)
 
@@ -39,9 +39,9 @@ python ./main.py ./train.txt ./test.txt ./model
 
 eg:  python main.py /home/lona/DeepLRR-CNN/script/train.txt /home/lona/DeepLRR-CNN/script/test.txt /home/lona/DeepLRR-CNN/script/model
 ```
-If you want to use the two commands successfully,you should make sure that your **python version is above 3.5.x** and **torch** has been installed   
+1. If you want to use the two commands successfully,you should make sure that your **python version is above 3.5.x** and **torch** has been installed   
 
-Please manually change the parameter of the number of training set in train.py
+2. Please manually change the parameter of the number of training set in train.py
 
 # DeepLRR-1.01
 **This part aims to predict the position,length and number of LRR units in the unknown protein sequence**
