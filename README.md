@@ -29,16 +29,16 @@ DeepLRR is available at http://lifenglab.hzau.edu.cn/DeepLRR
 ## Usages
     1. To divide the training set,validation set and testing set   
 ```shell
-python split_train_val_test.py  positivesampledataset.txt  negativesampledataset.txt   
+python ./split_train_val_test.py  ./positivesampledataset.txt  ./negativesampledataset.txt   
 
 eg:  python split_train_val_test.py /home/lona/DeepLRR-CNN/data/LRR_10938.txt /home/lona/DeepLRR-CNN/data/NOLRR_10938.txt
 ```
-==To train a new CNN model of DeepLRR==   
-
+    2. To train a new CNN model of DeepLRR==   
+```shell
 python ./main.py ./train.txt ./test.txt ./model   
 
 eg:  python main.py /home/lona/DeepLRR-CNN/script/train.txt /home/lona/DeepLRR-CNN/script/test.txt /home/lona/DeepLRR-CNN/script/model
-
+```
 If you want to use the two commands successfully,you should make sure that your python version is above 3.5.x and torch has been installed   
 
 Please manually change the parameter of the number of training set in train.py
