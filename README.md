@@ -47,13 +47,13 @@ eg:  python main.py /home/lona/DeepLRR-CNN/script/train.txt /home/lona/DeepLRR-C
 **This part aims to predict the position,length and number of LRR units in the unknown protein sequence**
 
 ## Usages
-    1. To predict the position,length and number of LRR units in the unknown protein sequence==   
+    1. To predict the position,length and number of LRR units by DeepLRR   
 ```shell
 python ./DeepLRR.py ./input.fasta Lscp Ldcp Lncp current_path model_name   
 
 eg:   python DeepLRR.py /home/lona/DeepLRR-1.01/demo/Q96FE5.fasta 4 9 3 /home/lona/DeepLRR-1.01 model-1.01.pt
 ```
-
++ The prediction tendency of DeepLRR can be changed by adjusting parameters,please refer to the paper for details
 
 # DeepLRR-pipeline
 
