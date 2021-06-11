@@ -11,16 +11,18 @@ DeepLRR is available at http://lifenglab.hzau.edu.cn/DeepLRR
 **This part contains all the raw data we used**   
 
 - Data
-  1. LRRproteins_1748_swissprot.fasta   *Sequences of the LRR protein we ultimately retained*
-  2. LRRproteins_1849_swissprot.fasta   *All LRR protein sequences downloaded from Swiss-Prot database*
-  3. LRRproteins_874_compare.fasta    *Comparison of DeepLRR and other software performance based on the test sample*
-  4. LRRproteins_874_parameter.fasta    *Analyze the adjustable parameters of DeepLRR based on the test sample*
-  5. LRRunits_17388.txt   *The sequence of LRR units before using CD-Hit*
-  6. LRRunits_17388_information.txt   *The information of LRR units before using CD-Hit*
-  7. LRRunits_18039_information.txt   *The information of all LRR units in 1849 LRR proteins from Swiss-Prot database*
-  8. NOLRRproteins_174800_swissprot.fasta   *Protein sequences that don't contain LRR unit in the Swiss-Prot database*
-  9. negativesampledataset.txt    *Negative samples used to train,validation and test the CNN model*
-  10. positivesampledataset.txt   *Positive samples used to train,validation and test the CNN model*
+  File name | Introduction
+  ------------------------
+  LRRproteins_1748_swissprot.fasta  | Sequences of the LRR protein we ultimately retained
+  LRRproteins_1849_swissprot.fasta  | All LRR protein sequences downloaded from Swiss-Prot database
+  LRRproteins_874_compare.fasta | Comparison of DeepLRR and other software performance based on the test sample
+  LRRproteins_874_parameter.fasta | Analyze the adjustable parameters of DeepLRR based on the test sample
+  LRRunits_17388.txt  | The sequence of LRR units before using CD-Hit
+  LRRunits_17388_information.txt  | The information of LRR units before using CD-Hit
+  LRRunits_18039_information.txt  | The information of all LRR units in 1849 LRR proteins from Swiss-Prot database
+  NOLRRproteins_174800_swissprot.fasta  | Protein sequences that don't contain LRR unit in the Swiss-Prot database
+  negativesampledataset.txt | Negative samples used to train,validation and test the CNN model
+  positivesampledataset.txt | Positive samples used to train,validation and test the CNN model
 
 # DeepLRR-CNN
 **This part is designed to help interested parties quickly divide the training set,validation set and testing set, in addition to train a new CNN model of DeepLRR**
