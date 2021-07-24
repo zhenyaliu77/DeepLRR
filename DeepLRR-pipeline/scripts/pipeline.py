@@ -28,12 +28,26 @@ def read_fasta(fasta_file):
     return fasta_list
 
 
-def rewrite_fasta(fasta_file, seqid):
+def rewrite_fasta_old(fasta_file, seqid):
     fasta_list = read_fasta(fasta_file)
     with open(fasta_file, 'w') as fasta:
         for i in fasta_list:
             if i[0] in seqid:
                 fasta.write('>' + i[0] + '\n' + i[1] + '\n')
+                
+            
+def rewrite_fasta(fasta_file, seqid):
+    def cut(obj, sec):
+        return [obj[i:i+sec] for i in range(0,len(obj),sec)]
+    fasta_list = read_fasta(fasta_file)
+    with open(fasta_file, 'w') as fasta:
+        for i in fasta_list:
+            if i[0] in seqid:
+                fasta.write('>' + i[0] + '\n')
+                baselist = cut(i[1],60)
+                for line in baselist:
+                    fasta.write(line + '\n')
+    print('Fasta rewrite completed, '+str(len(seqid))+' of '+str(len(fasta_list))+' sequences written!')
 
 
 def id_read(table):
@@ -45,12 +59,6 @@ def id_read(table):
 
 def pfam_process_atypia(result_file, output_file, pro_type):
     tmp = r'temp_' + str(randint(1, 99999999))
-    try:
-        open(result_file)
-    except:
-        print('[ERROR] PfamScan result not exist! Check your Pfam configuration or path permission!')
-        print('Session Terminated!')
-        quit()
     with open(result_file) as fin:
         with open(tmp, 'w') as fout:
             fout.writelines(line for i, line in enumerate(fin) if i > 27)
@@ -73,13 +81,6 @@ def pfam_process_atypia(result_file, output_file, pro_type):
 def pfam_process_pkinase(result_file, fastafile):
     tmp = r'temp_' + str(randint(1, 99999999))
     fastalist = read_fasta(fastafile)
-    try:
-        open(result_file)
-    except:
-        print('[ERROR] PfamScan result not exist! Check your Pfam configuration or path permission!')
-        print('Session Terminated!')
-        quit()
-
     with open(result_file) as fin:
         with open(tmp, 'w') as fout:
             fout.writelines(line for i, line in enumerate(fin) if i > 27)
@@ -97,16 +98,9 @@ def pfam_process_pkinase(result_file, fastafile):
     return table, pk_seqid, nopk_seqid
 
 
-def pfam_process_nbslrr(result_file, fastafile):
-    tmp = r'temp_' + str(randint(1,99999999))
-    # print('temporary file ',tmp,' generated')
-    try:
-        open(result_file)
-    except:
-        print('[ERROR] PfamScan result not exist! Check your Pfam configuration or path permission!')
-        print('Session Terminated!')
-        quit()
-
+def pfam_process_nbslrr(result_file, fastafile, wdir):
+    tmp =wdir + r'temp_' + str(randint(1,99999999))
+    print('temporary file ',tmp,' generated')
     with open(result_file) as fin:
         try:
             with open(tmp, 'w') as fout:
@@ -130,7 +124,7 @@ def pfam_process_nbslrr(result_file, fastafile):
                 TIR_table.append(
                 [value[0], str(eval(value[2] + '-' + value[1])+1) + 'aa', value[1], value[2], value[6], 'Pfam_Scan'])
     os.system('rm '+tmp)
-    # print('temporary file ',tmp,' removed')
+    print('temporary file ',tmp,' removed')
     NB_ARC_id = id_read(NB_ARC_table)
     CC_id = id_read(CC_table)
     TIR_id = id_read(TIR_table)
@@ -143,17 +137,58 @@ def pfam_process_nbslrr(result_file, fastafile):
             if record[0] not in id_last:
                 table.remove(record)
     return [CC_table, TIR_table, NB_ARC_table], id_last
+    
+    
+def pfam_process_nbslrr_v2(result_file, fastafile, wdir):
+    tmp =wdir + r'temp_' + str(randint(1,99999999))
+    print('temporary file ',tmp,' generated')
+    with open(result_file) as fin:
+        try:
+            with open(tmp, 'w') as fout:
+                fout.writelines(line for i, line in enumerate(fin) if i > 27)
+        except:
+            print('IO Error!')
+            exit()
+    NB_ARC_table = []
+    with open(tmp) as ftable:
+        for line in ftable:
+            value = line.split()
+            NB_ARC_table.append(
+                [value[0], str(eval(value[2] + '-' + value[1])+1) + 'aa', value[1], value[2], value[6], 'Pfam_Scan'])
+    os.system('rm '+tmp)
+    print('temporary file ',tmp,' removed')
+    id_last = id_read(NB_ARC_table)
+    if not len(id_last):
+        return False, False
+    return NB_ARC_table, id_last
+    
+    
+def pfam_process_tir(result_file, fastafile, wdir):
+    tmp =wdir + r'temp_' + str(randint(1,99999999))
+    print('temporary file ',tmp,' generated')
+    with open(result_file) as fin:
+        try:
+            with open(tmp, 'w') as fout:
+                fout.writelines(line for i, line in enumerate(fin) if i > 27)
+        except:
+            print('IO Error!')
+            exit()
+    TIR_table = []
+    with open(tmp) as ftable:
+        for line in ftable:
+            value = line.split()
+            TIR_table.append(
+                [value[0], str(eval(value[2] + '-' + value[1])+1) + 'aa', value[1], value[2], value[6], 'Pfam_Scan'])
+    os.system('rm '+tmp)
+    print('temporary file ',tmp,' removed')
+    id_last = id_read(TIR_table)
+    if not len(id_last):
+        return False, False
+    return TIR_table, id_last
 
 
 def signalp_process(result_file, fasta_file):
     tmp = r'temp_' + str(randint(1,99999999))
-    try:
-        open(result_file)
-    except:
-        print('[ERROR] SignalP result not exist! Check your SignalP configuration or work directory permission!')
-        print('Session Terminated!')
-        quit()
-
     with open(result_file, 'r') as fin:
         with open(tmp, 'w') as fout:
             fout.writelines(line for i, line in enumerate(fin) if i > 0)
@@ -173,13 +208,6 @@ def signalp_process(result_file, fasta_file):
 def tmhmm_process(result_file, fasta_file):
     tm_seqid = set()
     table = []
-    try:
-        open(result_file)
-    except:
-        print('[ERROR] TMHMM result not exist! Check your TMHMM configuration or path permission!')
-        print('Session Terminated!')
-        quit()
-
     with open(result_file) as result:
         regexp1 = re.compile(r'predicted')
         for line in result:
@@ -198,16 +226,24 @@ def tmhmm_process(result_file, fasta_file):
     return table, tm_seqid
 
 
+def coils_process(result_file):
+    cc_table = []
+    cc_seqid = set()
+    with open(result_file) as fout:
+        for line in fout:
+            if int(line.split()[1]) <= 1:
+                seqid = line.rstrip('\n').split('segment  : ')[-1].split()[0]
+            else:
+                seqid = line.rstrip('\n').split('segments : ')[-1].split()[0]
+            cc_seqid.add(seqid)
+            cc_table.append([seqid,'N/A','N/A','N/A','CC','COILS'])
+            
+    return cc_table, cc_seqid
+
+
 def deeplrr_process(result_file):
     table = []
     lrr_seqid = set()
-    try:
-        open(result_file)
-    except:
-        print('[ERROR] DeepLRR result not exist! Check your path permission!')
-        print('Session Terminated!')
-        quit()
-
     with open(result_file) as fout:
         for line in fout:
             if line.startswith('Protein ID'):
@@ -226,7 +262,7 @@ def write_domain(seqid, table, outputfile):
     outstr = ''
     for domain in table:
     	if domain[0] in seqid:
-            outstr += ('\t'.join(domain)+'\n')     
+            outstr += ('\t'.join(domain)+'\n')
     with open(outputfile, 'a') as out:
         out.write(outstr)
 
@@ -258,7 +294,7 @@ def output_lrr_rlpk(nopk_seqid, pk_seqid, sp_seqid, tm_seqid, lrr_seqid, pk_tabl
     return thereis
 
 
-def output_nbs_lrr(integrated_seqid, lrr_seqid, table_integrated, lrr_table, output, multi=False):
+def output_nbs_lrr_old(integrated_seqid, lrr_seqid, table_integrated, lrr_table, output, multi=False):
     head = 'ProteinID\tLength\tStart\tEnd\tDomain\tTool\n'
     with open(output,'a') as result:
     	result.write(head)
@@ -277,6 +313,36 @@ def output_nbs_lrr(integrated_seqid, lrr_seqid, table_integrated, lrr_table, out
             result.write('\n'+'Potential NBS-LRR Proteins:'+'\n')
             result.writelines([seqid+'\n' for seqid in selected_seqid])
     return thereis
+    
+    
+def output_nbs_lrr(nbs_id, lrr_id, tir_id, cc_id, nbs_table, lrr_table, tir_table, cc_table, output, multi=False):
+    head = 'ProteinID\tLength\tStart\tEnd\tDomain\tTool\n'
+    thereis = True
+    total_table = []
+    for record in nbs_table:
+        if record[0] in lrr_id:
+            total_table.append(record)
+    total_table += lrr_table
+    if tir_table:
+        total_table += tir_table
+    if cc_table:
+        total_table += cc_table
+    with open(output, 'w') as result:
+        result.write(head)
+        for record in total_table:
+            line = '\t'.join(record) + '\n'
+            result.write(line)
+        if multi:
+            result.write('\n'+'Potential NBS-LRR Proteins:'+'\n')
+            for record in lrr_id:
+                if record in tir_id:
+                    result.write(record + '(TNR)\n')
+                elif record in cc_id:
+                    result.write(record + '(CNR)\n')
+                else:
+                    result.write(record +  '\n')
+    return thereis
+    
 
 
 if __name__ == '__main__':

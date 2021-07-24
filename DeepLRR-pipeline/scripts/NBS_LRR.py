@@ -10,8 +10,6 @@ import os
 import sys
 import pipeline
 import getopt
-from random import randint
-
 
 opts, args = getopt.getopt(sys.argv[1:], '-h', ["help"])
 for opt_name, opt_value in opts:
@@ -28,49 +26,70 @@ if len(args) < 3:
 if len(args) > 3:
     print("ERROR! too much argument!")
 if len(args) == 3:
-    input_file_old = args[0]
+    wdir = '/var/www/lifenglab/DeepLRR/Upfile/NBS_file/'
     input_file = args[0]
+    # print(input_file)
     input_filename = '.'.join(input_file.split('.')[0:-1])
-    rand_id = str(randint(1,99999999))
-    os.system('cp '+input_file+' '+input_filename+'_temp'+rand_id+'.fa')
-    input_filename += '_temp'+rand_id
-    input_file = input_filename + '.fa'
-    input_filename_noprefix = input_filename.split(r'/')[-1]
-    #print(input_file)
-    #print(input_filename)
-    #print(input_filename_noprefix)
+    # print(input_filename)
     output_file = args[1]
     modelname = args[2]
-    #print(args)
+    print(args)
     curr_dir = os.getcwd()
-    if len(pipeline.read_fasta(input_file)) > 1:
+    if len(pipeline.read_fasta(wdir+input_file)) > 1:
         multi = True
     else:
         multi = False
-
-    cmd_pfam_nbslrr = r'pfam_scan.pl -fasta ' +input_file + r' -dir HMMs/NBS_LRR_HMM -outfile ' + input_filename_noprefix + '_pfam.out'
-    cmd_deeplrr = r'python scripts/DeepLRR-1.01/DeepLRR.py '+input_file + ' 4 9 3 '+ 'scripts/DeepLRR-1.01 ' + modelname#/home/lifeng/DeepLRR/scripts/DeepLRR-1.02'
-    print('>>Running PfamScan...')
-    os.system(cmd_pfam_nbslrr)
-    print('>>PfamScan Successful!')
-    integrated_table, integrated_id = pipeline.pfam_process_nbslrr(input_filename_noprefix + '_pfam.out', input_file)
-    if not integrated_table:
-        print('NO DOMAIN IDENTIFIED')
-        os.system('rm ' + input_file)
-        os.system('rm '+input_filename_noprefix+'_pfam.out')
-        quit()
-    os.system('rm ' + input_filename_noprefix +'_pfam.out')
-    print('>>Running DeepLRR...')
+    cmd_pfam_nbs = r'pfam_scan.pl -fasta ' +wdir+ input_file + r' -dir /home/lifeng/DeepLRR/HMMs/NBS_HMM -outfile ' + wdir + input_filename + '_pfam.out'
+    cmd_pfam_tir = r'pfam_scan.pl -fasta ' +wdir+ input_file + r' -dir /home/lifeng/DeepLRR/HMMs/TIR_HMM -outfile ' + wdir + input_filename + '_pfam.out'
+    cmd_deeplrr = r'python /home/lifeng/DeepLRR/scripts/DeepLRR-1.02/DeepLRR.py '+ wdir +input_file+' 4 9 3 '+'/home/lifeng/DeepLRR/scripts/DeepLRR-1.02 ' + modelname#/home/lifeng/DeepLRR/scripts/DeepLRR-1.02'
+    cmd_coils = r'coils < ' + wdir + input_file + ' -c -min_seg 1 > ' + wdir + input_filename + '_coils.out'
+    
+    #FIND NB-ARC @PfamScan
+    print('Running PfamScan...')
+    os.system(cmd_pfam_nbs)
+    print('PfamScan Successful!')
+    nbs_table, nbs_id = pipeline.pfam_process_nbslrr_v2(wdir + input_filename + '_pfam.out', wdir + input_file, wdir)
+    if not nbs_table:
+        print('NO DOMAIN IDENTIFIED!')
+        os.system('rm '+wdir+input_file)
+        os.system('rm '+wdir+input_filename+'_pfam.out')
+        exit()
+    os.system('rm ' + wdir + input_filename+'_pfam.out')
+    pipeline.rewrite_fasta(wdir + input_file, nbs_id)
+    
+    #FIND LRR @DeepLRR
+    print('Running DeepLRR...')
     os.system(cmd_deeplrr)
-    lrr_table, lrr_id = pipeline.deeplrr_process(r'scripts/DeepLRR-1.01/outcome/'+input_filename_noprefix+r'_predict2.txt')
-    print('>>DeepLRR Successful!')
-    os.system('rm scripts/DeepLRR-1.01/outcome/'+input_filename_noprefix+r'_*')
+    lrr_table, lrr_id = pipeline.deeplrr_process(r'/home/lifeng/DeepLRR/scripts/DeepLRR-1.02/outcome/'+input_filename+r'_predict2.txt')
+    print('DeepLRR Successful!')
+    if not len(lrr_id):
+        print('NO DOMAIN IDENTIFIED!')
+        os.system('rm '+wdir+input_file)
+        os.system('rm /home/lifeng/DeepLRR/scripts/DeepLRR-1.02/outcome/'+input_filename+r'_*')
+        exit()
+    os.system('rm /home/lifeng/DeepLRR/scripts/DeepLRR-1.02/outcome/'+input_filename+r'_*')
     #print(lrr_table)
-    thereis = pipeline.output_nbs_lrr(integrated_id, lrr_id, integrated_table, lrr_table, output_file, multi)
+    pipeline.rewrite_fasta(wdir + input_file, lrr_id)
+    
+    #FIND TIR @DeepLRR
+    print('Running PfamScan...')
+    os.system(cmd_pfam_tir)
+    print('PfamScan Successful!')
+    tir_table, tir_id = pipeline.pfam_process_tir(wdir + input_filename + '_pfam.out', wdir + input_file, wdir)
+    os.system('rm ' + wdir + input_filename+'_pfam.out')
+    
+    #FIND CC @COILS
+    print('Running COILS...')
+    os.system(cmd_coils)
+    print('COILS Successful!')
+    cc_table, cc_id = pipeline.coils_process(wdir + input_filename + '_coils.out')
+    os.system('rm ' + wdir + input_filename+'_coils.out')
+    
+    thereis = pipeline.output_nbs_lrr(nbs_id, lrr_id, tir_id, cc_id, nbs_table, lrr_table, tir_table, cc_table, wdir+output_file, multi)
     if not thereis:
-        print('NO DOMAIN IDENTIFIED')
-        os.system('rm '+output_file)
-        os.system('rm '+input_file)
-        quit()
-    print('\nSearch Completed! Results has written to > '+output_file+'\n')
-    os.system('rm '+input_file)
+        print('NO DOMAIN IDENTIFIED!')
+        os.system('rm '+wdir+output_file)
+        os.system('rm '+wdir+input_file)
+        exit()
+    print('Completed! Results has written to > '+output_file)
+    os.system('rm '+wdir+input_file)
