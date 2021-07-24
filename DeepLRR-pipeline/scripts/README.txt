@@ -37,3 +37,4 @@ STEP-2 Atypia Domain Identification:
 2.TMHMM 2.0b (*it has updated to 2.0c for now)
 3.SignalP-5.0
 4.DeepLRR
+5.COILS
