@@ -34,7 +34,18 @@ def env_check():
     check_hmmscan = 'which hmmscan'
     back = subprocess.Popen(check_tm, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
     if back[0].decode() == '':
-        print('[ERROR] hmmer not found, Please install it before LRR_Search, or check if its path has been add to $PATH!')
+        print('[ERROR] HMMER not found, Please install it before LRR_Search, or check if its path has been add to $PATH!')
+        checked = False
+    check_coils = 'which coils'
+    back = subprocess.Popen(check_tm, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+    if back[0].decode() == '':
+        print('[ERROR] COILS not found, Please install it before LRR_Search, or check if its path has been add to $PATH!')
+        checked = False
+    check_coilsdir = 'echo $COILSDIR'
+    coilsdir_back = subprocess.Popen(check_coilsdir, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+    #print(coilsdir_back[0].decode())
+    if coilsdir_back[0].decode() == '':
+        print('[ERROR] environment variable $COILSDIR not found, please add COILS path to $PATH!')
         checked = False
     try:
         import torch
@@ -102,6 +113,9 @@ def input_check(input_filename, output_filename, category, model_name):
 if __name__ == '__main__':
     try:
         options, args = getopt.getopt(sys.argv[1:], "ehd:af:o:m:", ['envcheck', 'help', 'domain=', 'atypical', 'fasta=', 'output=', 'model='])
+        if len(options)==0:
+            usage()
+            quit()
         for name, value in options:
             if name in ('-e', '--envcheck'):
                 checked = env_check()
