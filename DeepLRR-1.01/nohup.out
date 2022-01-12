@@ -1,0 +1,75 @@
+done
+done
+done
+done
+done
+done
+done
+done
+done
+done
+done
+done
+done
+done
+done
+done
+done
+done
+done
+done
+done
+Traceback (most recent call last):
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/fastaTosegment.py", line 73, in <module>
+    stay_dict = ProteinToDict(fasta_path)
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/fastaTosegment.py", line 18, in ProteinToDict
+    fin_protein = open(path,'r')
+FileNotFoundError: [Errno 2] No such file or directory: '/var/www/html/DeepLRR/DeepLRR-1.01/supplymentary/compare/test_874-mix-gap1000.fasta'
+Traceback (most recent call last):
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/predict1.py", line 71, in <module>
+    Main(input_path, output_path)
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/predict1.py", line 28, in Main
+    fin = open(initial_path, 'r')
+FileNotFoundError: [Errno 2] No such file or directory: '/var/www/html/DeepLRR/DeepLRR-1.01/outcome/test_874-mix-gap1000_segment.txt'
+Traceback (most recent call last):
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/predict2.py", line 286, in <module>
+    allgroupsite = GroupSite(input_path)
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/predict2.py", line 10, in GroupSite
+    fin = open(path,'r')
+FileNotFoundError: [Errno 2] No such file or directory: '/var/www/html/DeepLRR/DeepLRR-1.01/outcome/test_874-mix-gap1000_predict1.txt'
+Traceback (most recent call last):
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/gapsequence.py", line 85, in <module>
+    protein = ProteinToDict(protein_path)
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/gapsequence.py", line 16, in ProteinToDict
+    fin_protein = open(path,'r')
+FileNotFoundError: [Errno 2] No such file or directory: '/var/www/html/DeepLRR/DeepLRR-1.01/supplymentary/compare/test_874-mix-gap1000.fasta'
+done
+Traceback (most recent call last):
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/fastaTosegment.py", line 73, in <module>
+    stay_dict = ProteinToDict(fasta_path)
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/fastaTosegment.py", line 18, in ProteinToDict
+    fin_protein = open(path,'r')
+FileNotFoundError: [Errno 2] No such file or directory: '/var/www/html/DeepLRR/DeepLRR-1.01/supplymentary/compare/test_874-mix-gap1500.fasta'
+Traceback (most recent call last):
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/predict1.py", line 71, in <module>
+    Main(input_path, output_path)
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/predict1.py", line 28, in Main
+    fin = open(initial_path, 'r')
+FileNotFoundError: [Errno 2] No such file or directory: '/var/www/html/DeepLRR/DeepLRR-1.01/outcome/test_874-mix-gap1500_segment.txt'
+Traceback (most recent call last):
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/predict2.py", line 286, in <module>
+    allgroupsite = GroupSite(input_path)
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/predict2.py", line 10, in GroupSite
+    fin = open(path,'r')
+FileNotFoundError: [Errno 2] No such file or directory: '/var/www/html/DeepLRR/DeepLRR-1.01/outcome/test_874-mix-gap1500_predict1.txt'
+Traceback (most recent call last):
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/gapsequence.py", line 85, in <module>
+    protein = ProteinToDict(protein_path)
+  File "/var/www/html/DeepLRR/DeepLRR-1.01/gapsequence.py", line 16, in ProteinToDict
+    fin_protein = open(path,'r')
+FileNotFoundError: [Errno 2] No such file or directory: '/var/www/html/DeepLRR/DeepLRR-1.01/supplymentary/compare/test_874-mix-gap1500.fasta'
+done
+done
+done
+done
+done

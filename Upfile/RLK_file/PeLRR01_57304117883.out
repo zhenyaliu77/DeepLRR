@@ -1,0 +1,10 @@
+ProteinID	Length	Start	End	Domain	Tool
+PeLRR01	268aa	600	867	Pkinase	Pfam_Scan
+PeLRR01	N/A	N/A	N/A	SP	signalp-5.0b
+PeLRR01	23aa	5	27	TM	tmhmm2.0c
+PeLRR01	23aa	529	551	TM	tmhmm2.0c
+PeLRR01	20aa	412	431	LRR	DeepLRR
+PeLRR01	24aa	435	458	LRR	DeepLRR
+PeLRR01	20aa	459	478	LRR	DeepLRR
+PeLRR01	20aa	483	502	LRR	DeepLRR
+PeLRR01	20aa	505	524	LRR	DeepLRR
