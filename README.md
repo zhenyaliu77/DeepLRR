@@ -234,7 +234,7 @@ If parameters of DeepLRR is omitted, they will be set as default which are 4 9 3
 python DeepLRR_Search.py -f <input_file> -o <output_file> -d LRR -m [model_name]
 ```
 
-#### 3.2.2 NBS-LRR/LRR-RLP/LRR-RLP Domain Search
+#### 3.2.2 NBS-LRR/LRR-RLK/LRR-RLP Domain Search
 
 **\*\*When searching for these three domains, the input parameter setting will omitted and use default parameters instead.**
 
